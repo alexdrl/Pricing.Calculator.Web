@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Pricing.Calculator.Web.App.Forward;
 using Pricing.Calculator.Web.App.Services;
 using System;
+using Pricing.Calculator.Web.App.ApiClients.CalculatorClient;
 
 namespace Pricing.Calculator.Web.App
 {
@@ -34,6 +35,13 @@ namespace Pricing.Calculator.Web.App
             {
                 client.BaseAddress = new Uri(Configuration["CalculatorApi:BaseAddress"]);
             });
+
+            services.AddHttpClient<ICalculatorApiClient, CalculatorApiClient>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration["CalculatorApi:BaseAddress"]);
+            });
+
+            services.AddScoped<IRuleSetService, RuleSetService> ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
