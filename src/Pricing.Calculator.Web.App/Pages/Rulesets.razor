@@ -1,4 +1,5 @@
 ﻿@page "/rulesets"
+@using Pricing.Calculator.Web.App.Models.Request
 
 <div class="row">
     <div class="col-3">
@@ -53,7 +54,7 @@
     @foreach (var chargeConf in ChargeConfigurations)
     {
         <EditForm Model="@chargeConf">
-            <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" />
+            <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" OnClickDelete="@OnClickDelete" />
         </EditForm>
     }
 
@@ -97,6 +98,11 @@
 
     private void Publish()
     {
-      
+
+    }
+
+    private void OnClickDelete(ChargeConfiguration chargeConfiguration)
+    {
+        ChargeConfigurations.Remove(chargeConfiguration);
     }
 }

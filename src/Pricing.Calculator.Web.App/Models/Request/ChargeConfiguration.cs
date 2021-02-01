@@ -8,6 +8,8 @@ namespace Pricing.Calculator.Web.App.Models.Request
 
         [Required] public decimal Rate { get; set; }
 
+        [Required] public decimal FixedValue { get; set; }
+
         [Required] public decimal DeminimisThreshold { get; set; }
 
         [Required] public bool Enabled { get; set; } = true;

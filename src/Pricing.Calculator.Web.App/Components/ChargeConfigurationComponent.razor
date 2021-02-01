@@ -6,7 +6,7 @@
         <div class="float-right">
             <button class="btn btn-success pt-0 pb-0 ml-2" type="button" @onclick="() => ChargeConfiguration.Enabled = true">Enable</button>
             <button class="btn btn-warning pt-0 pb-0 ml-2" type="button" @onclick="() => ChargeConfiguration.Enabled = false">Disable</button>
-            <button class="btn btn-danger pt-0 pb-0 ml-2" type="button"><span class="oi oi-trash"></span></button>
+            <button class="btn btn-danger pt-0 pb-0 ml-2" type="button" @onclick="() => OnClickDelete.InvokeAsync(ChargeConfiguration)"><span class="oi oi-trash"></span></button>
         </div>
 
     </div>
@@ -31,13 +31,27 @@
                     </InputSelect>
                 </div>
             </div>
-
-            <div class="col">
-                <div class="form-group">
-                    <label>Rate</label>
-                    <input type="text" class="form-control"  @bind="ChargeConfiguration.Rate">
+            
+            @if (ChargeConfiguration.ChargeType == ChargeType.ValueBased || ChargeConfiguration.ChargeType == ChargeType.WeightBased)
+            {
+                <div class="col">
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <input type="text" class="form-control"  @bind="ChargeConfiguration.Rate">
+                    </div>
                 </div>
-            </div>
+            }
+            
+            @if (ChargeConfiguration.ChargeType == ChargeType.Fixed)
+            {
+                <div class="col">
+                    <div class="form-group">
+                        <label>Value</label>
+                        <input type="text" class="form-control"  @bind="ChargeConfiguration.FixedValue">
+                    </div>
+                </div>
+            }
+           
             <div class="col">
                 <div class="form-group">
                     <label>Deminimis Threshold</label>
@@ -75,5 +89,7 @@
 
     [Parameter]
     public Models.Request.ChargeConfiguration ChargeConfiguration { get; set; } = new Models.Request.ChargeConfiguration();
+
+    [Parameter] public EventCallback<ChargeConfiguration> OnClickDelete { get; set; }
 
 }
