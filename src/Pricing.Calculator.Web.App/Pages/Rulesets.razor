@@ -49,7 +49,7 @@
     </div>
 
     <h4 class="mb-3 border-bottom">Charge Configurations</h4>
-    <button class="btn btn-danger pt-0 pb-0 ml-2" type="button"><span class="oi oi-plus" @onclick="AddNewChargeConfig"></span></button>
+    <button class="btn btn-danger pt-0 pb-0 ml-2" type="button" @onclick="AddNewChargeConfig"><span class="oi oi-plus"></span></button>
 
     @foreach (var chargeConf in ChargeConfigurations)
     {
@@ -74,7 +74,7 @@
     {
         new Models.Request.ChargeConfiguration
         {
-            Name = "test"
+            Name = "Vat"
         }
     };
 

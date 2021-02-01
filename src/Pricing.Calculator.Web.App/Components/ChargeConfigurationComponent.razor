@@ -12,14 +12,14 @@
     </div>
     <div class="card-body">
         <div class="row">
-            
+
             <div class="col">
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" @bind="ChargeConfiguration.Name" >
+                    <input type="text" class="form-control" @bind="ChargeConfiguration.Name">
                 </div>
             </div>
-            
+
             <div class="col">
                 <div class="form-group">
                     <label>Charge Type</label>
@@ -31,27 +31,27 @@
                     </InputSelect>
                 </div>
             </div>
-            
+
             @if (ChargeConfiguration.ChargeType == ChargeType.ValueBased || ChargeConfiguration.ChargeType == ChargeType.WeightBased)
             {
                 <div class="col">
                     <div class="form-group">
                         <label>Rate</label>
-                        <input type="text" class="form-control"  @bind="ChargeConfiguration.Rate">
+                        <input type="text" class="form-control" @bind="ChargeConfiguration.Rate">
                     </div>
                 </div>
             }
-            
+
             @if (ChargeConfiguration.ChargeType == ChargeType.Fixed)
             {
                 <div class="col">
                     <div class="form-group">
                         <label>Value</label>
-                        <input type="text" class="form-control"  @bind="ChargeConfiguration.FixedValue">
+                        <input type="text" class="form-control" @bind="ChargeConfiguration.FixedValue">
                     </div>
                 </div>
             }
-           
+
             <div class="col">
                 <div class="form-group">
                     <label>Deminimis Threshold</label>
@@ -63,21 +63,35 @@
             <div class="col">
                 <div class="form-group">
                     <label>Deminimis Base Charges</label>
-                    <select class="custom-select" multiple>
-                        <option value="item" selected>Item</option>
-                        <option value="delivery">Delivery</option>
-                    </select>
+                    <div>
+                        @foreach (var item in ChargeConfiguration.DeminimisBaseCharges)
+                        {
+                            <div>
+                                <label for="@item.name">
+                                    <input type="checkbox"  checked="@item.selected" @onchange="@((e) => CheckboxChangedDeminimis(e, item.name))" />
+                                    @item.name
+                                </label>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
+
             <div class="col">
                 <div class="form-group">
                     <label>Base Charges</label>
-                    <select class="custom-select" multiple>
-                        <option value="item" selected>Item</option>
-                        <option value="delivery">Delivery</option>
-                        <option value="duty" selected>Duty</option>
-                        <option value="vat">Vat</option>
-                    </select>
+                  
+                    <div>
+                        @foreach (var item in ChargeConfiguration.BaseCharges)
+                        {
+                            <div>
+                                <label for="@item.name">
+                                    <input type="checkbox" checked="@item.selected" @onchange="@((e) => CheckboxChangedBaseCharges(e, item.name))" />
+                                    @item.name
+                                </label>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,4 +106,25 @@
 
     [Parameter] public EventCallback<ChargeConfiguration> OnClickDelete { get; set; }
 
+    private void CheckboxChangedDeminimis(ChangeEventArgs e, string key)
+    {
+        var i = ChargeConfiguration.DeminimisBaseCharges.FirstOrDefault(i => i.name == key);
+        var index = ChargeConfiguration.DeminimisBaseCharges.IndexOf(i);
+
+        i.selected = (bool)e.Value;
+
+        ChargeConfiguration.DeminimisBaseCharges.RemoveAll(i => i.name == key);
+        ChargeConfiguration.DeminimisBaseCharges.Insert(index, i);
+    }
+
+    private void CheckboxChangedBaseCharges(ChangeEventArgs e, string key)
+    {
+        var i = ChargeConfiguration.BaseCharges.FirstOrDefault(i => i.name == key);
+        var index = ChargeConfiguration.BaseCharges.IndexOf(i);
+
+        i.selected = (bool)e.Value;
+
+        ChargeConfiguration.BaseCharges.RemoveAll(i => i.name == key);
+        ChargeConfiguration.BaseCharges.Insert(index, i);
+    }
 }
