@@ -36,7 +36,7 @@ namespace Pricing.Calculator.Web.App.Models.Request
             tt.Name = source.Name;
             tt.FixedValue = (decimal) (source.FixedChargeAmount?.Value ?? 0);
             tt.Rate = (decimal) (source.Rate ?? 0);
-            tt.BaseCharges =  source.BaseChargeNames.Select(x => (false, x)).ToList();
+            tt.BaseCharges =  source.BaseChargeNames.Select(x => (true, x)).ToList();
             tt.Enabled = true;
             return tt;
         }
