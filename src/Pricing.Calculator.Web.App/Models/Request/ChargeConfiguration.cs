@@ -14,7 +14,7 @@ namespace Pricing.Calculator.Web.App.Models.Request
 
         [Required] public string Name { get; set; } = string.Empty;
 
-        [Required] public decimal Rate { get; set; }
+        public decimal? Rate { get; set; }
 
         [Required] public decimal FixedValue { get; set; }
 
@@ -35,7 +35,7 @@ namespace Pricing.Calculator.Web.App.Models.Request
             tt.DeminimisThreshold = (decimal)(source.Deminimis?.Threshold?.Value ?? 0);
             tt.Name = source.Name;
             tt.FixedValue = (decimal) (source.FixedChargeAmount?.Value ?? 0);
-            tt.Rate = (decimal) (source.Rate ?? 0);
+            tt.Rate = (decimal?) (source.Rate);
             tt.BaseCharges =  source.BaseChargeNames.Select(x => (true, x)).ToList();
             tt.Enabled = true;
             return tt;
@@ -45,7 +45,7 @@ namespace Pricing.Calculator.Web.App.Models.Request
         {
             var tt = new ChargeConfigurationDto(source.ChargeType.ToString(),
                 source.Name,
-                rate: source.Rate > 0 ? Convert.ToDouble(source.Rate) : null,
+                rate: source.Rate != null ? Convert.ToDouble(source.Rate) : null,
                 baseChargeNames: source.BaseCharges.Where(x => x.selected).Select(x => x.name).ToList(),
                 deminimis: new DeminimisDto(new PriceDto(Convert.ToDouble(source.DeminimisThreshold), "EUR"), true) 
             );
