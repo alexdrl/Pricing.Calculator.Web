@@ -2,11 +2,13 @@
 
 @using Pricing.Calculator.Web.App.Models.Request
 @using Pricing.Calculator.Web.App.Models
+@using Pricing.Calculator.Web.App.Models.Request.Forward
+@using Pricing.Calculator.Web.App.Models.Response
 
 <div class="row">
     <div class="col-3">
         <label class="form-label">Select Ruleset:</label>
-         <EditForm Model="@ActiveRulesets">
+        <EditForm Model="@ActiveRulesets">
             <InputSelect @bind-Value="CurrentRulesetId" class="form-control">
                 @foreach (var value in ActiveRulesets)
                 {
@@ -77,12 +79,26 @@
 
 </EditForm>
 
+<EditForm Model="@order">
+
+    <ObjectGraphDataAnnotationsValidator />
+    <ForwardOrderFormComponent Order="@order" />
+    <CalculatedChargesComponent Calculation="@productionCalculation" Status="@status" CardTitle="Live Ruleset Charges" />
+    <CalculatedChargesComponent Calculation="@previewCalculation" Status="@status" CardTitle="Modified Ruleset Charges" />
+
+</EditForm>
+
 @code {
 
+    private string? status = "Waiting...";
     private string _currentRulesetId = string.Empty;
     private bool Ishidden = true;
 
     public Ruleset ruleset { get; set; } = new Ruleset();
+    public Models.Request.Forward.Order order { get; set; } = new Models.Request.Forward.Order();
+
+    private Calculation? productionCalculation;
+    private Calculation? previewCalculation;
 
     public string CurrentRulesetId
     {
@@ -106,7 +122,7 @@
         new Ruleset() { SourceCountry = "GB", DeclarationCountry = "NL" }
     };
 
-    
+
     private void AddNewChargeConfig()
     {
         ruleset.ChargeConfigurations.Add(new Models.Request.ChargeConfiguration());

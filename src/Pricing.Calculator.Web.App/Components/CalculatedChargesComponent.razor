@@ -2,7 +2,7 @@
 
 <div class="card" style="margin-top: 20px">
     <div class="card-header text-white bg-info">
-        Calculation Result
+        @CardTitle
     </div>
     <div class="card-body">
         @if (Calculation == null)
@@ -84,4 +84,7 @@
 
     [Parameter]
     public Calculation? Calculation { get; set; }
+
+    [Parameter]
+    public string CardTitle { get; set; } = "Calculated Charges";
 }
