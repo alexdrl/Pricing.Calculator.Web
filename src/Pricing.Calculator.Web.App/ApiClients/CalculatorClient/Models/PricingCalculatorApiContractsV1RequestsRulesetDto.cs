@@ -14,20 +14,20 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Representation of a ruleset.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1RequestsRulesetDto
+    public partial class RulesetDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsRulesetDto class.
+        /// RulesetDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1RequestsRulesetDto()
+        public RulesetDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsRulesetDto class.
+        /// RulesetDto class.
         /// </summary>
         /// <param name="deminimisBasePrices">(Required) The base charges for
         /// this definition.</param>
@@ -38,7 +38,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// ISO.</param>
         /// <param name="declarationCountryIso">(Required) The declaration
         /// country ISO.</param>
-        public PricingCalculatorApiContractsV1RequestsRulesetDto(IList<string> deminimisBasePrices, IList<PricingCalculatorApiContractsV1RequestsChargeConfigurationDto> chargeConfigurations, string sourceCountryIso = default(string), string declarationCountryIso = default(string))
+        public RulesetDto(IList<string> deminimisBasePrices, IList<ChargeConfigurationDto> chargeConfigurations, string sourceCountryIso = default(string), string declarationCountryIso = default(string))
         {
             SourceCountryIso = sourceCountryIso;
             DeclarationCountryIso = declarationCountryIso;
@@ -75,7 +75,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// on a rate applied to the base charge amount.
         /// </summary>
         [JsonProperty(PropertyName = "chargeConfigurations")]
-        public IList<PricingCalculatorApiContractsV1RequestsChargeConfigurationDto> ChargeConfigurations { get; set; }
+        public IList<ChargeConfigurationDto> ChargeConfigurations { get; set; }
 
     }
 }

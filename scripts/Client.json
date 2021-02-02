@@ -4,6 +4,10 @@
     "title": "CalculatorApi",
     "version": "1.0"
   },
+  "host": "pricing-calculator-api.test.eshopworld.net:80",
+  "schemes": [
+    "https"
+  ],
   "paths": {
     "/api/v1/Actions/calculate/forward": {
       "post": {
@@ -11,7 +15,7 @@
           "Actions"
         ],
         "summary": "Process forward calculation.",
-	"operationId" : "SendForward",
+        "operationId": "ForwardCalculation",
         "consumes": [
           "application/json-patch+json",
           "application/json",
@@ -41,7 +45,7 @@
           "Actions"
         ],
         "summary": "Process reverse calculation.",
-	"operationId" : "SendReverse",
+        "operationId": "ReverseCalculation",
         "consumes": [
           "application/json-patch+json",
           "application/json",
@@ -71,7 +75,7 @@
           "Calculations"
         ],
         "summary": "Gets the specified identifier.",
-	"operationId" : "GetCalculations",
+        "operationId": "GetCalculation",
         "produces": [
           "text/plain",
           "application/json",
@@ -103,7 +107,7 @@
           "Rulesets"
         ],
         "summary": "Gets the specified identifier.",
-	"operationId" : "GetRuleset",
+        "operationId": "GetRuleset",
         "produces": [
           "application/json"
         ],
@@ -120,7 +124,7 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.RulesetResponseDto"
+              "type": "string"
             }
           }
         }
@@ -132,7 +136,7 @@
           "Rulesets"
         ],
         "summary": "Creates a ruleset from the specified data, or updates a matching one from that data.",
-	"operationId" : "SendRuleset",
+        "operationId": "SendRuleset",
         "consumes": [
           "application/json-patch+json",
           "application/json",
@@ -338,6 +342,23 @@
         }
       }
     },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.DeminimisDto": {
+      "description": "Monetary value DTO",
+      "required": [
+        "applyWhenGreaterThanThresholdOnly",
+        "threshold"
+      ],
+      "type": "object",
+      "properties": {
+        "threshold": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "applyWhenGreaterThanThresholdOnly": {
+          "description": "Specifies that the deminimis is applied only when the amount is greater, not when it is equal to the threshold.",
+          "type": "boolean"
+        }
+      }
+    },
     "Pricing.Calculator.Domain.Rulesets.ChargeType": {
       "format": "int32",
       "enum": [
@@ -346,6 +367,95 @@
         2
       ],
       "type": "integer"
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.ChargeConfigurationDto": {
+      "description": "Representation of a ruleset.",
+      "required": [
+        "chargeType"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the charge.",
+          "type": "string",
+          "readOnly": true
+        },
+        "deminimis": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.DeminimisDto"
+        },
+        "rate": {
+          "format": "double",
+          "description": "Rate that the charge is applied on.",
+          "type": "number",
+          "readOnly": true
+        },
+        "chargeType": {
+          "$ref": "#/definitions/Pricing.Calculator.Domain.Rulesets.ChargeType"
+        },
+        "baseChargeNames": {
+          "description": "The base charges on which this charge is applied.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        },
+        "fixedChargeAmount": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "activeFrom": {
+          "format": "date-time",
+          "description": "The date in which the charge is active.",
+          "type": "string",
+          "readOnly": true
+        },
+        "minimumPayable": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "maximumPayable": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "minimumCollectible": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "excess": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.RulesetDto": {
+      "description": "Representation of a ruleset.",
+      "required": [
+        "chargeConfigurations",
+        "deminimisBasePrices"
+      ],
+      "type": "object",
+      "properties": {
+        "sourceCountryIso": {
+          "description": "(Optional) The source country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "declarationCountryIso": {
+          "description": "(Required) The declaration country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "deminimisBasePrices": {
+          "description": "(Required) The base charges for this definition.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "chargeConfigurations": {
+          "description": "(Required) The charge configurations for charges based on a rate applied to the base charge amount.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.ChargeConfigurationDto"
+          }
+        }
+      }
     },
     "Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto": {
       "description": "Monetary value DTO",
@@ -460,112 +570,6 @@
             "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.ChargeConfigurationResponseDto"
           },
           "readOnly": true
-        }
-      }
-    },
-    "Pricing.Calculator.Api.Contracts.V1.Requests.DeminimisDto": {
-      "description": "Monetary value DTO",
-      "required": [
-        "applyWhenGreaterThanThresholdOnly",
-        "threshold"
-      ],
-      "type": "object",
-      "properties": {
-        "threshold": {
-          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
-        },
-        "applyWhenGreaterThanThresholdOnly": {
-          "description": "Specifies that the deminimis is applied only when the amount is greater, not when it is equal to the threshold.",
-          "type": "boolean"
-        }
-      }
-    },
-    "Pricing.Calculator.Api.Contracts.V1.Requests.ChargeConfigurationDto": {
-      "description": "Representation of a ruleset.",
-      "required": [
-        "chargeType"
-      ],
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "Name of the charge.",
-          "type": "string",
-          "readOnly": true
-        },
-        "deminimis": {
-          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.DeminimisDto"
-        },
-        "rate": {
-          "format": "double",
-          "description": "Rate that the charge is applied on.",
-          "type": "number",
-          "readOnly": true
-        },
-        "chargeType": {
-          "$ref": "#/definitions/Pricing.Calculator.Domain.Rulesets.ChargeType"
-        },
-        "baseChargeNames": {
-          "description": "The base charges on which this charge is applied.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "readOnly": true
-        },
-        "fixedChargeAmount": {
-          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
-        },
-        "activeFrom": {
-          "format": "date-time",
-          "description": "The date in which the charge is active.",
-          "type": "string",
-          "readOnly": true
-        },
-        "minimumPayable": {
-          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
-        },
-        "maximumPayable": {
-          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
-        },
-        "minimumCollectible": {
-          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
-        },
-        "excess": {
-          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
-        }
-      }
-    },
-    "Pricing.Calculator.Api.Contracts.V1.Requests.RulesetDto": {
-      "description": "Representation of a ruleset.",
-      "required": [
-        "chargeConfigurations",
-        "deminimisBasePrices"
-      ],
-      "type": "object",
-      "properties": {
-        "sourceCountryIso": {
-          "description": "(Optional) The source country ISO.",
-          "type": "string",
-          "readOnly": true
-        },
-        "declarationCountryIso": {
-          "description": "(Required) The declaration country ISO.",
-          "type": "string",
-          "readOnly": true
-        },
-        "deminimisBasePrices": {
-          "description": "(Required) The base charges for this definition.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "chargeConfigurations": {
-          "description": "(Required) The charge configurations for charges based on a rate applied to the base charge amount.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.ChargeConfigurationDto"
-          }
         }
       }
     }

@@ -14,20 +14,20 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Reverse Calculation DTO implementation.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1RequestsReverseCalculationDto
+    public partial class ReverseCalculationDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsReverseCalculationDto class.
+        /// ReverseCalculationDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1RequestsReverseCalculationDto()
+        public ReverseCalculationDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsReverseCalculationDto class.
+        /// ReverseCalculationDto class.
         /// </summary>
         /// <param name="items">Gets the items DTO.</param>
         /// <param name="orderId">(Required) Order Id, Guid as string.</param>
@@ -38,7 +38,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// country ISO.</param>
         /// <param name="brandCode">(Optional) The three letter brand
         /// code.</param>
-        public PricingCalculatorApiContractsV1RequestsReverseCalculationDto(IList<PricingCalculatorApiContractsV1RequestsItemDto> items, string orderId = default(string), string currencyIso = default(string), string sourceCountryIso = default(string), string declarationCountryIso = default(string), string brandCode = default(string), PricingCalculatorApiContractsV1RequestsIncotermsDto incoterms = default(PricingCalculatorApiContractsV1RequestsIncotermsDto))
+        public ReverseCalculationDto(IList<ItemDto> items, string orderId = default(string), string currencyIso = default(string), string sourceCountryIso = default(string), string declarationCountryIso = default(string), string brandCode = default(string), IncotermsDto incoterms = default(IncotermsDto))
         {
             OrderId = orderId;
             CurrencyIso = currencyIso;
@@ -89,12 +89,12 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// Gets the items DTO.
         /// </summary>
         [JsonProperty(PropertyName = "items")]
-        public IList<PricingCalculatorApiContractsV1RequestsItemDto> Items { get; set; }
+        public IList<ItemDto> Items { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "incoterms")]
-        public PricingCalculatorApiContractsV1RequestsIncotermsDto Incoterms { get; set; }
+        public IncotermsDto Incoterms { get; set; }
 
     }
 }

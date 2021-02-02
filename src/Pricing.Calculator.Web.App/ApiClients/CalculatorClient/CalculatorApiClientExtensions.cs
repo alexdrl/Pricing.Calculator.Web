@@ -28,7 +28,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// A calculation DTO, instance of
             /// Pricing.Calculator.Api.Contracts.V1.Requests.ForwardCalculationDto class.
             /// </param>
-            public static void SendForward(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsForwardCalculationDto body = default(PricingCalculatorApiContractsV1RequestsForwardCalculationDto))
+            public static void SendForward(this ICalculatorApiClient operations, ForwardCalculationDto body = default(ForwardCalculationDto))
             {
                 operations.SendForwardAsync(body).GetAwaiter().GetResult();
             }
@@ -46,7 +46,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SendForwardAsync(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsForwardCalculationDto body = default(PricingCalculatorApiContractsV1RequestsForwardCalculationDto), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SendForwardAsync(this ICalculatorApiClient operations, ForwardCalculationDto body = default(ForwardCalculationDto), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SendForwardWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -64,7 +64,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse SendForwardWithHttpMessages(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsForwardCalculationDto body = default(PricingCalculatorApiContractsV1RequestsForwardCalculationDto), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse SendForwardWithHttpMessages(this ICalculatorApiClient operations, ForwardCalculationDto body = default(ForwardCalculationDto), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.SendForwardWithHttpMessagesAsync(body, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -79,7 +79,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// A calculation DTO, instance of
             /// Pricing.Calculator.Api.Contracts.V1.Requests.ReverseCalculationDto class.
             /// </param>
-            public static void SendReverse(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsReverseCalculationDto body = default(PricingCalculatorApiContractsV1RequestsReverseCalculationDto))
+            public static void SendReverse(this ICalculatorApiClient operations, ReverseCalculationDto body = default(ReverseCalculationDto))
             {
                 operations.SendReverseAsync(body).GetAwaiter().GetResult();
             }
@@ -97,7 +97,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SendReverseAsync(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsReverseCalculationDto body = default(PricingCalculatorApiContractsV1RequestsReverseCalculationDto), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task SendReverseAsync(this ICalculatorApiClient operations, ReverseCalculationDto body = default(ReverseCalculationDto), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.SendReverseWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -115,7 +115,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse SendReverseWithHttpMessages(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsReverseCalculationDto body = default(PricingCalculatorApiContractsV1RequestsReverseCalculationDto), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse SendReverseWithHttpMessages(this ICalculatorApiClient operations, ReverseCalculationDto body = default(ReverseCalculationDto), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.SendReverseWithHttpMessagesAsync(body, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -180,7 +180,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='id'>
             /// The identifier.
             /// </param>
-            public static PricingCalculatorApiContractsV1ResponsesRulesetResponseDto GetRuleset(this ICalculatorApiClient operations, string id)
+            public static RulesetResponseDto GetRuleset(this ICalculatorApiClient operations, string id)
             {
                 return operations.GetRulesetAsync(id).GetAwaiter().GetResult();
             }
@@ -197,7 +197,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto> GetRulesetAsync(this ICalculatorApiClient operations, string id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RulesetResponseDto> GetRulesetAsync(this ICalculatorApiClient operations, string id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetRulesetWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -217,7 +217,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto> GetRulesetWithHttpMessages(this ICalculatorApiClient operations, string id, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<RulesetResponseDto> GetRulesetWithHttpMessages(this ICalculatorApiClient operations, string id, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.GetRulesetWithHttpMessagesAsync(id, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -231,7 +231,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static PricingCalculatorApiContractsV1ResponsesRulesetResponseDto SendRuleset(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsRulesetDto body = default(PricingCalculatorApiContractsV1RequestsRulesetDto))
+            public static RulesetResponseDto SendRuleset(this ICalculatorApiClient operations, RulesetDto body = default(RulesetDto))
             {
                 return operations.SendRulesetAsync(body).GetAwaiter().GetResult();
             }
@@ -248,7 +248,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto> SendRulesetAsync(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsRulesetDto body = default(PricingCalculatorApiContractsV1RequestsRulesetDto), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RulesetResponseDto> SendRulesetAsync(this ICalculatorApiClient operations, RulesetDto body = default(RulesetDto), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.SendRulesetWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -268,7 +268,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto> SendRulesetWithHttpMessages(this ICalculatorApiClient operations, PricingCalculatorApiContractsV1RequestsRulesetDto body = default(PricingCalculatorApiContractsV1RequestsRulesetDto), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<RulesetResponseDto> SendRulesetWithHttpMessages(this ICalculatorApiClient operations, RulesetDto body = default(RulesetDto), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.SendRulesetWithHttpMessagesAsync(body, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }

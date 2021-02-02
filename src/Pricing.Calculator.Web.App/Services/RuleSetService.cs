@@ -12,7 +12,7 @@ namespace Pricing.Calculator.Web.App.Services
             _calculatorApiClient = calculatorApiClient;
         }
 
-        public PricingCalculatorApiContractsV1ResponsesRulesetResponseDto GetRuleSet (string id)
+        public RulesetResponseDto GetRuleSet (string id)
         {
             var ruleSet  = _calculatorApiClient.GetRuleset (id);
             return ruleSet;

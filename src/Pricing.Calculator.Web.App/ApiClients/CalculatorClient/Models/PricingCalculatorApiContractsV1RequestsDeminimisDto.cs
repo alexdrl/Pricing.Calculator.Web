@@ -12,25 +12,25 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Monetary value DTO
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1RequestsDeminimisDto
+    public partial class DeminimisDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsDeminimisDto class.
+        /// DeminimisDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1RequestsDeminimisDto()
+        public DeminimisDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsDeminimisDto class.
+        /// DeminimisDto class.
         /// </summary>
         /// <param name="applyWhenGreaterThanThresholdOnly">Specifies that the
         /// deminimis is applied only when the amount is greater, not when it
         /// is equal to the threshold.</param>
-        public PricingCalculatorApiContractsV1RequestsDeminimisDto(PricingCalculatorApiContractsV1RequestsPriceDto threshold, bool applyWhenGreaterThanThresholdOnly)
+        public DeminimisDto(PriceDto threshold, bool applyWhenGreaterThanThresholdOnly)
         {
             Threshold = threshold;
             ApplyWhenGreaterThanThresholdOnly = applyWhenGreaterThanThresholdOnly;
@@ -45,7 +45,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "threshold")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto Threshold { get; set; }
+        public PriceDto Threshold { get; set; }
 
         /// <summary>
         /// Gets or sets specifies that the deminimis is applied only when the

@@ -12,25 +12,25 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Deminimis Response DTO.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1ResponsesDeminimisResponseDto
+    public partial class DeminimisResponseDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1ResponsesDeminimisResponseDto class.
+        /// DeminimisResponseDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1ResponsesDeminimisResponseDto()
+        public DeminimisResponseDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1ResponsesDeminimisResponseDto class.
+        /// DeminimisResponseDto class.
         /// </summary>
         /// <param name="applyWhenGreaterThanThresholdOnly">Gets a value
         /// indicating whether [apply when greater than threshold
         /// only].</param>
-        public PricingCalculatorApiContractsV1ResponsesDeminimisResponseDto(PricingCalculatorApiContractsV1ResponsesPriceResponseDto threshold = default(PricingCalculatorApiContractsV1ResponsesPriceResponseDto), bool? applyWhenGreaterThanThresholdOnly = default(bool?))
+        public DeminimisResponseDto(PriceResponseDto threshold = default(PriceResponseDto), bool? applyWhenGreaterThanThresholdOnly = default(bool?))
         {
             Threshold = threshold;
             ApplyWhenGreaterThanThresholdOnly = applyWhenGreaterThanThresholdOnly;
@@ -45,7 +45,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "threshold")]
-        public PricingCalculatorApiContractsV1ResponsesPriceResponseDto Threshold { get; set; }
+        public PriceResponseDto Threshold { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether [apply when greater than threshold

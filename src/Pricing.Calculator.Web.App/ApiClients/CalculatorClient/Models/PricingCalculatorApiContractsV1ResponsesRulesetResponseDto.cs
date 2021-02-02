@@ -14,20 +14,20 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Ruleset response DTO.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1ResponsesRulesetResponseDto
+    public partial class RulesetResponseDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1ResponsesRulesetResponseDto class.
+        /// RulesetResponseDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1ResponsesRulesetResponseDto()
+        public RulesetResponseDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1ResponsesRulesetResponseDto class.
+        /// RulesetResponseDto class.
         /// </summary>
         /// <param name="id">Gets the identifier.</param>
         /// <param name="version">Gets the version.</param>
@@ -35,7 +35,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// charges.</param>
         /// <param name="chargeConfigurations">Gets the charge
         /// configurations.</param>
-        public PricingCalculatorApiContractsV1ResponsesRulesetResponseDto(string id = default(string), System.Guid? version = default(System.Guid?), IList<string> deminimisBasePrices = default(IList<string>), IList<PricingCalculatorApiContractsV1ResponsesChargeConfigurationResponseDto> chargeConfigurations = default(IList<PricingCalculatorApiContractsV1ResponsesChargeConfigurationResponseDto>))
+        public RulesetResponseDto(string id = default(string), System.Guid? version = default(System.Guid?), IList<string> deminimisBasePrices = default(IList<string>), IList<ChargeConfigurationResponseDto> chargeConfigurations = default(IList<ChargeConfigurationResponseDto>))
         {
             Id = id;
             Version = version;
@@ -71,7 +71,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// Gets the charge configurations.
         /// </summary>
         [JsonProperty(PropertyName = "chargeConfigurations")]
-        public IList<PricingCalculatorApiContractsV1ResponsesChargeConfigurationResponseDto> ChargeConfigurations { get; private set; }
+        public IList<ChargeConfigurationResponseDto> ChargeConfigurations { get; private set; }
 
     }
 }

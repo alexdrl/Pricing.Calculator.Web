@@ -223,10 +223,10 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
             {
                 throw new System.ArgumentNullException("baseUri");
             }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
+            //if (credentials == null)
+            //{
+            //    throw new System.ArgumentNullException("credentials");
+            //}
             BaseUri = baseUri;
             Credentials = credentials;
             if (Credentials != null)
@@ -327,7 +327,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> SendForwardWithHttpMessagesAsync(PricingCalculatorApiContractsV1RequestsForwardCalculationDto body = default(PricingCalculatorApiContractsV1RequestsForwardCalculationDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> SendForwardWithHttpMessagesAsync(ForwardCalculationDto body = default(ForwardCalculationDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -443,7 +443,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> SendReverseWithHttpMessagesAsync(PricingCalculatorApiContractsV1RequestsReverseCalculationDto body = default(PricingCalculatorApiContractsV1RequestsReverseCalculationDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> SendReverseWithHttpMessagesAsync(ReverseCalculationDto body = default(ReverseCalculationDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -698,7 +698,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto>> GetRulesetWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<RulesetResponseDto>> GetRulesetWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (id == null)
             {
@@ -784,7 +784,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto>();
+            var _result = new HttpOperationResponse<RulesetResponseDto>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -793,7 +793,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<RulesetResponseDto>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -833,7 +833,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto>> SendRulesetWithHttpMessagesAsync(PricingCalculatorApiContractsV1RequestsRulesetDto body = default(PricingCalculatorApiContractsV1RequestsRulesetDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<RulesetResponseDto>> SendRulesetWithHttpMessagesAsync(RulesetDto body = default(RulesetDto), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -920,7 +920,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto>();
+            var _result = new HttpOperationResponse<RulesetResponseDto>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -929,7 +929,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<PricingCalculatorApiContractsV1ResponsesRulesetResponseDto>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<RulesetResponseDto>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

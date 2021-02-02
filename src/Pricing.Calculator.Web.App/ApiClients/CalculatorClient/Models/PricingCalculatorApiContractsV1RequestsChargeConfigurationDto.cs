@@ -14,21 +14,21 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Representation of a ruleset.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1RequestsChargeConfigurationDto
+    public partial class ChargeConfigurationDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsChargeConfigurationDto
+        /// ChargeConfigurationDto
         /// class.
         /// </summary>
-        public PricingCalculatorApiContractsV1RequestsChargeConfigurationDto()
+        public ChargeConfigurationDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsChargeConfigurationDto
+        /// ChargeConfigurationDto
         /// class.
         /// </summary>
         /// <param name="name">Name of the charge.</param>
@@ -37,7 +37,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// is applied.</param>
         /// <param name="activeFrom">The date in which the charge is
         /// active.</param>
-        public PricingCalculatorApiContractsV1RequestsChargeConfigurationDto(int chargeType, string name = default(string), PricingCalculatorApiContractsV1RequestsDeminimisDto deminimis = default(PricingCalculatorApiContractsV1RequestsDeminimisDto), double? rate = default(double?), IList<string> baseChargeNames = default(IList<string>), PricingCalculatorApiContractsV1RequestsPriceDto fixedChargeAmount = default(PricingCalculatorApiContractsV1RequestsPriceDto), System.DateTime? activeFrom = default(System.DateTime?), PricingCalculatorApiContractsV1RequestsPriceDto minimumPayable = default(PricingCalculatorApiContractsV1RequestsPriceDto), PricingCalculatorApiContractsV1RequestsPriceDto maximumPayable = default(PricingCalculatorApiContractsV1RequestsPriceDto), PricingCalculatorApiContractsV1RequestsPriceDto minimumCollectible = default(PricingCalculatorApiContractsV1RequestsPriceDto), PricingCalculatorApiContractsV1RequestsPriceDto excess = default(PricingCalculatorApiContractsV1RequestsPriceDto))
+        public ChargeConfigurationDto(string chargeType, string name = default(string), DeminimisDto deminimis = default(DeminimisDto), double? rate = default(double?), IList<string> baseChargeNames = default(IList<string>), PriceDto fixedChargeAmount = default(PriceDto), System.DateTime? activeFrom = default(System.DateTime?), PriceDto minimumPayable = default(PriceDto), PriceDto maximumPayable = default(PriceDto), PriceDto minimumCollectible = default(PriceDto), PriceDto excess = default(PriceDto))
         {
             Name = name;
             Deminimis = deminimis;
@@ -67,7 +67,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "deminimis")]
-        public PricingCalculatorApiContractsV1RequestsDeminimisDto Deminimis { get; set; }
+        public DeminimisDto Deminimis { get; set; }
 
         /// <summary>
         /// Gets rate that the charge is applied on.
@@ -78,7 +78,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "chargeType")]
-        public int ChargeType { get; set; }
+        public string ChargeType { get; set; }
 
         /// <summary>
         /// Gets the base charges on which this charge is applied.
@@ -89,7 +89,7 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "fixedChargeAmount")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto FixedChargeAmount { get; set; }
+        public PriceDto FixedChargeAmount { get; set; }
 
         /// <summary>
         /// Gets the date in which the charge is active.
@@ -100,22 +100,22 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "minimumPayable")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto MinimumPayable { get; set; }
+        public PriceDto MinimumPayable { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "maximumPayable")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto MaximumPayable { get; set; }
+        public PriceDto MaximumPayable { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "minimumCollectible")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto MinimumCollectible { get; set; }
+        public PriceDto MinimumCollectible { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "excess")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto Excess { get; set; }
+        public PriceDto Excess { get; set; }
 
     }
 }

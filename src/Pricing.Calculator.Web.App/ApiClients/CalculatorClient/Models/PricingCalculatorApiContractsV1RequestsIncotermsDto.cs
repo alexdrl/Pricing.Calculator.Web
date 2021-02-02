@@ -14,25 +14,25 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Represents an Incoterms DTO.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1RequestsIncotermsDto
+    public partial class IncotermsDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsIncotermsDto class.
+        /// IncotermsDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1RequestsIncotermsDto()
+        public IncotermsDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsIncotermsDto class.
+        /// IncotermsDto class.
         /// </summary>
         /// <param name="chargeNames">(Optional) Gets a collection of Charge
         /// Names to be used when a custom set of incoterms rules are being
         /// used.</param>
-        public PricingCalculatorApiContractsV1RequestsIncotermsDto(int rule, IList<string> chargeNames = default(IList<string>))
+        public IncotermsDto(int rule, IList<string> chargeNames = default(IList<string>))
         {
             Rule = rule;
             ChargeNames = chargeNames;

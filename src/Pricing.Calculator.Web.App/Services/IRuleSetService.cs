@@ -4,6 +4,6 @@ namespace Pricing.Calculator.Web.App.Services
 {
     public interface IRuleSetService
     {
-        PricingCalculatorApiContractsV1ResponsesRulesetResponseDto GetRuleSet (string id);
+        RulesetResponseDto GetRuleSet (string id);
     }
 }

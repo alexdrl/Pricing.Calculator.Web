@@ -12,24 +12,24 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Price DTO.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1RequestsPriceDto
+    public partial class PriceDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsPriceDto class.
+        /// PriceDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1RequestsPriceDto()
+        public PriceDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsPriceDto class.
+        /// PriceDto class.
         /// </summary>
         /// <param name="value">Monetary value</param>
         /// <param name="currencyIso">An ISO 4217 currency code string.</param>
-        public PricingCalculatorApiContractsV1RequestsPriceDto(double value, string currencyIso = default(string))
+        public PriceDto(double value, string currencyIso = default(string))
         {
             CurrencyIso = currencyIso;
             Value = value;

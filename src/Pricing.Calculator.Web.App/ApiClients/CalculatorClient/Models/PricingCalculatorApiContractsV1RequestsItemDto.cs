@@ -12,26 +12,26 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
     /// <summary>
     /// Item DTO.
     /// </summary>
-    public partial class PricingCalculatorApiContractsV1RequestsItemDto
+    public partial class ItemDto
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsItemDto class.
+        /// ItemDto class.
         /// </summary>
-        public PricingCalculatorApiContractsV1RequestsItemDto()
+        public ItemDto()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PricingCalculatorApiContractsV1RequestsItemDto class.
+        /// ItemDto class.
         /// </summary>
         /// <param name="quantity">Gets items quantity.</param>
         /// <param name="vatRate">Gets Vat rate</param>
         /// <param name="dutyRate">Gets Duty rate</param>
         /// <param name="weight">Gets Weight</param>
-        public PricingCalculatorApiContractsV1RequestsItemDto(PricingCalculatorApiContractsV1RequestsPriceDto inputPrice, PricingCalculatorApiContractsV1RequestsPriceDto inputDeliveryPrice, int? quantity = default(int?), double? vatRate = default(double?), double? dutyRate = default(double?), double? weight = default(double?))
+        public ItemDto(PriceDto inputPrice, PriceDto inputDeliveryPrice, int? quantity = default(int?), double? vatRate = default(double?), double? dutyRate = default(double?), double? weight = default(double?))
         {
             Quantity = quantity;
             InputPrice = inputPrice;
@@ -56,12 +56,12 @@ namespace Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "inputPrice")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto InputPrice { get; set; }
+        public PriceDto InputPrice { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "inputDeliveryPrice")]
-        public PricingCalculatorApiContractsV1RequestsPriceDto InputDeliveryPrice { get; set; }
+        public PriceDto InputDeliveryPrice { get; set; }
 
         /// <summary>
         /// Gets Vat rate
