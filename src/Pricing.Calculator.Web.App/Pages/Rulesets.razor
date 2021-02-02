@@ -21,72 +21,77 @@
 
 <hr />
 
-<EditForm Model="@ruleset" OnValidSubmit="@Publish">
+<div class="row">
+    <EditForm Model="@ruleset" OnValidSubmit="@Publish">
 
-    <ObjectGraphDataAnnotationsValidator />
+        <ObjectGraphDataAnnotationsValidator />
 
 
-    <div hidden="@Ishidden">
-        <h4 class="mb-3 border-bottom">Main Attributes</h4>
+        <div hidden="@Ishidden">
+            <h4 class="mb-3 border-bottom">Main Attributes</h4>
 
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Source Country</label>
-                            <InputText @bind-Value="ruleset.SourceCountry" class="form-control" />
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Source Country</label>
+                                <InputText @bind-Value="ruleset.SourceCountry" class="form-control" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Declaration Country</label>
-                            <InputText @bind-Value="ruleset.DeclarationCountry" class="form-control" />
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Declaration Country</label>
+                                <InputText @bind-Value="ruleset.DeclarationCountry" class="form-control" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Brand Code</label>
-                            <InputText @bind-Value="ruleset.BrandCode" class="form-control" />
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Brand Code</label>
+                                <InputText @bind-Value="ruleset.BrandCode" class="form-control" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label>Postal Method</label>
-                            <InputText @bind-Value="ruleset.PostalMethod" class="form-control" />
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Postal Method</label>
+                                <InputText @bind-Value="ruleset.PostalMethod" class="form-control" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <h4 class="mb-3 border-bottom">Charge Configurations</h4>
+            <button class="btn btn-danger pt-0 pb-0 ml-2" type="button" @onclick="AddNewChargeConfig"><span class="oi oi-plus"></span></button>
+
+            @foreach (var chargeConf in ruleset.ChargeConfigurations)
+            {
+
+                <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" OnClickDelete="@OnClickDelete" />
+
+            }
+
+            <hr />
+            <div class="float-right mb-3">
+                <button class="btn btn-info" type="button" @onclick="Preview">Preview Changes</button>
+                <button class="btn btn-primary" type="button" @onclick="Publish">Publish Changes</button>
+            </div>
         </div>
 
-        <h4 class="mb-3 border-bottom">Charge Configurations</h4>
-        <button class="btn btn-danger pt-0 pb-0 ml-2" type="button" @onclick="AddNewChargeConfig"><span class="oi oi-plus"></span></button>
+    </EditForm>
+</div>
 
-        @foreach (var chargeConf in ruleset.ChargeConfigurations)
-        {
+<div class="row">
+    <EditForm Model="@order">
 
-            <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" OnClickDelete="@OnClickDelete" />
+        <ObjectGraphDataAnnotationsValidator />
+        <ForwardOrderFormComponent Order="@order" />
+        <CalculatedChargesComponent Calculation="@productionCalculation" Status="@status" CardTitle="Live Ruleset Charges" />
+        <CalculatedChargesComponent Calculation="@previewCalculation" Status="@status" CardTitle="Modified Ruleset Charges" />
 
-        }
+    </EditForm>
+</div>
 
-        <hr />
-        <div class="float-right mb-3">
-            <button class="btn btn-info" type="button" @onclick="Preview">Preview Changes</button>
-            <button class="btn btn-primary" type="button" @onclick="Publish">Publish Changes</button>
-        </div>
-    </div>
-
-</EditForm>
-
-<EditForm Model="@order">
-
-    <ObjectGraphDataAnnotationsValidator />
-    <ForwardOrderFormComponent Order="@order" />
-    <CalculatedChargesComponent Calculation="@productionCalculation" Status="@status" CardTitle="Live Ruleset Charges" />
-    <CalculatedChargesComponent Calculation="@previewCalculation" Status="@status" CardTitle="Modified Ruleset Charges" />
-
-</EditForm>
 
 @code {
 
