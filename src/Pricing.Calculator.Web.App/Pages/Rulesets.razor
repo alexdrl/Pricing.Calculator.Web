@@ -1,12 +1,16 @@
 ﻿@page "/rulesets"
 @using Microsoft.Net.Http.Headers
+@using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models
 @using Pricing.Calculator.Web.App.Services
 @inject IRuleSetService RuleSetService
+@inject IPreviewCalculationService PreviewCalculationService
 
 @using Pricing.Calculator.Web.App.Models.Request
 @using Pricing.Calculator.Web.App.Models
 @using Pricing.Calculator.Web.App.Models.Request.Forward
+@using Pricing.Calculator.Web.App.Models.Request.Preview
 @using Pricing.Calculator.Web.App.Models.Response
+@using System.Threading
 
 <div class="row">
     <div class="col-3">
@@ -115,7 +119,7 @@
         {
             _currentRulesetId = value;
 
-            if (string.IsNullOrWhiteSpace (value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 Ishidden = true;
                 return;
@@ -151,9 +155,10 @@
     {
     }
 
-    private void Preview()
+    private async Task Preview()
     {
-
+        var request = new PreviewRequest() { CalculationDto = order, RulesetDto = Ruleset.ToRuleSetRequestDto(ruleset, new List<string>() { "Item", "Delivery" }) };
+        var result = await this.PreviewCalculationService.Calculate(request, CancellationToken.None);
     }
 
     private void OnClickDelete(ChargeConfiguration chargeConfiguration)

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Tracing;
 using System.Linq;
-using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models;
 
 namespace Pricing.Calculator.Web.App.Models.Request
 {
@@ -39,6 +38,18 @@ namespace Pricing.Calculator.Web.App.Models.Request
             tt.Rate = (decimal) (source.Rate ?? 0);
             tt.BaseCharges =  source.BaseChargeNames.Select(x => (false, x)).ToList();
             tt.Enabled = true;
+            return tt;
+        }
+
+        public static ChargeConfigurationDto MapTo(ChargeConfiguration source)
+        {
+            var tt = new ChargeConfigurationDto(source.ChargeType.ToString(),
+                source.Name,
+                rate: Convert.ToDouble(source.Rate),
+                baseChargeNames: source.BaseCharges.Where(x => x.selected).Select(x => x.name).ToList(),
+                deminimis: new DeminimisDto(new PriceDto(Convert.ToDouble(source.DeminimisThreshold)), true) 
+            );
+
             return tt;
         }
     }

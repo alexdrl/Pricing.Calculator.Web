@@ -1,8 +1,8 @@
-﻿using Pricing.Calculator.Web.App.Models.Request;
+﻿using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models;
+using Pricing.Calculator.Web.App.Models.Request;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models;
 
 namespace Pricing.Calculator.Web.App.Models
 {
@@ -34,6 +34,20 @@ namespace Pricing.Calculator.Web.App.Models
             target.SourceCountry = source.Id.Split ('-').First (x => x.StartsWith ("SC")).Split (':')[1];
             target.DeclarationCountry = source.Id.Split('-').First(x => x.StartsWith("DC")).Split(':')[1];
             target.ChargeConfigurations =  source.ChargeConfigurations.Select(ChargeConfiguration.MapFrom).ToList();
+            return target;
+        }
+
+        /// <summary>
+        /// FromApiRuleSetResponseDto
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static RulesetDto ToRuleSetRequestDto(Ruleset source, List<string> deminimisbasePrices)
+        {
+            var target = new RulesetDto(deminimisbasePrices,
+                source.ChargeConfigurations.Select(ChargeConfiguration.MapTo).ToList(), source.SourceCountry,
+                source.DeclarationCountry);
+
             return target;
         }
     }
