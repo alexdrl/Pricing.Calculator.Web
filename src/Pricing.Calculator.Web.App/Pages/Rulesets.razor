@@ -34,7 +34,7 @@
 
             <ObjectGraphDataAnnotationsValidator />
 
-            <div hidden="@Ishidden" class="mb-3">
+            <div hidden="@Ishidden" class="mb-4">
                 <h4 class="mb-3 border-bottom">Main Attributes</h4>
 
                 <div class="card mb-3">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="row border-bottom mb-3">
+                <div class="row">
                     <div class="col-10">
                         <h4>Charge Configurations</h4>
                     </div>
@@ -76,13 +76,19 @@
                         <button class="btn btn-secondary pt-0 pb-0 float-right" style="min-width: 150px" type="button" @onclick="AddNewChargeConfig">Add New</button>
                     </div>
                 </div>
-                
-                @foreach (var chargeConf in ruleset.ChargeConfigurations)
-                {
 
-                    <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" OnClickDelete="@OnClickDelete" />
+                <hr style="margin-top:0" />
 
-                }
+                <div class="row">
+                    <div class="col">
+                        @foreach (var chargeConf in ruleset.ChargeConfigurations)
+                        {
+
+                            <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" OnClickDelete="@OnClickDelete" />
+
+                        }
+                    </div>
+                </div>
 
                 <hr />
                 <div class="mb-3">
@@ -189,7 +195,7 @@
     {
         hidePreview = !hidePreview;
         TogglePreviewText();
-        
+
         var request = new PreviewRequest() { CalculationDto = order, RulesetDto = Ruleset.ToRuleSetRequestDto(ruleset, new List<string>() { "Item", "Delivery" }) };
         var result = await this.PreviewCalculationService.Calculate(request, CancellationToken.None);
 
