@@ -9,7 +9,7 @@ namespace Pricing.Calculator.Web.App.Models.Request
 
         public List<(bool selected, string name)> BaseCharges = new() { (true, "Item"), (true, "Delivery"), (false, "Duty"), (false, "Vat") };
 
-        [Required] public string Name { get; set; }
+        [Required] public string Name { get; set; } = string.Empty;
 
         [Required] public decimal Rate { get; set; }
 

@@ -1,5 +1,7 @@
 ﻿@page "/rulesets"
+
 @using Pricing.Calculator.Web.App.Models.Request
+@using Pricing.Calculator.Web.App.Models
 
 <div class="row">
     <div class="col-3">
@@ -14,71 +16,73 @@
 
 <hr />
 
-<div hidden="@Ishidden">
-    <h4 class="mb-3 border-bottom">Main Attributes</h4>
+<EditForm Model="@ruleset" OnValidSubmit="@Publish">
 
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label>Source Country</label>
-                        <input type="text" readonly class="form-control" value="GB">
+    <ObjectGraphDataAnnotationsValidator />
+
+
+    <div hidden="@Ishidden">
+        <h4 class="mb-3 border-bottom">Main Attributes</h4>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Source Country</label>
+                            <InputText @bind-Value="ruleset.SourceCountry" class="form-control" />
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label>Declaration Country</label>
-                        <input type="text" readonly class="form-control" value="IE">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Declaration Country</label>
+                            <InputText @bind-Value="ruleset.DeclarationCountry" class="form-control" />
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label>Brand</label>
-                        <input type="text" readonly class="form-control" value="-">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Brand Code</label>
+                            <InputText @bind-Value="ruleset.BrandCode" class="form-control" />
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <label>Postal Method</label>
-                        <input type="text" readonly class="form-control" value="-">
+                    <div class="col">
+                        <div class="form-group">
+                            <label>Postal Method</label>
+                            <InputText @bind-Value="ruleset.PostalMethod" class="form-control" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <h4 class="mb-3 border-bottom">Charge Configurations</h4>
-    <button class="btn btn-danger pt-0 pb-0 ml-2" type="button" @onclick="AddNewChargeConfig"><span class="oi oi-plus"></span></button>
+        <h4 class="mb-3 border-bottom">Charge Configurations</h4>
+        <button class="btn btn-danger pt-0 pb-0 ml-2" type="button" @onclick="AddNewChargeConfig"><span class="oi oi-plus"></span></button>
 
-    @foreach (var chargeConf in ChargeConfigurations)
-    {
-        <EditForm Model="@chargeConf">
+        @foreach (var chargeConf in ruleset.ChargeConfigurations)
+        {
+
             <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" OnClickDelete="@OnClickDelete" />
-        </EditForm>
-    }
 
-    <hr />
-    <div class="float-right mb-3">
-        <button class="btn btn-info" type="button">Preview Changes</button>
-        <button class="btn btn-primary" type="button" @onclick="Publish">Publish Changes</button>
+        }
+
+        <hr />
+        <div class="float-right mb-3">
+            <button class="btn btn-info" type="button" @onclick="Preview">Preview Changes</button>
+            <button class="btn btn-primary" type="button" @onclick="Publish">Publish Changes</button>
+        </div>
     </div>
-</div>
+
+</EditForm>
 
 @code {
 
     private string _currentRulesetId = string.Empty;
     private bool Ishidden = true;
 
-    public List<Models.Request.ChargeConfiguration> ChargeConfigurations { get; set; } = new List<Models.Request.ChargeConfiguration>()
-    {
-        new Models.Request.ChargeConfiguration
-        {
-            Name = "Vat"
-        }
-    };
+    public Ruleset ruleset { get; set; } = new Ruleset();
 
-    public string CurrentRulesetId {
+    public string CurrentRulesetId
+    {
         get { return _currentRulesetId; }
         set
         {
@@ -93,7 +97,7 @@
 
     private void AddNewChargeConfig()
     {
-        ChargeConfigurations.Add(new Models.Request.ChargeConfiguration());
+        ruleset.ChargeConfigurations.Add(new Models.Request.ChargeConfiguration());
     }
 
     private void Publish()
@@ -101,8 +105,13 @@
 
     }
 
+    private void Preview()
+    {
+
+    }
+
     private void OnClickDelete(ChargeConfiguration chargeConfiguration)
     {
-        ChargeConfigurations.Remove(chargeConfiguration);
+        ruleset.ChargeConfigurations.Remove(chargeConfiguration);
     }
 }
