@@ -75,7 +75,7 @@
                 }
 
                 <hr />
-                <div class="float-right mb-3">
+                <div class="mb-3">
                     <button class="btn btn-info" type="button" @onclick="Preview">@previewButtonText</button>
                     <button class="btn btn-primary" type="button" @onclick="Publish">Publish Changes</button>
                 </div>
@@ -108,7 +108,7 @@
 
                 <ValidationMessage For=@(() => order.Items) style="margin-bottom:20px" />
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Calculate</button>
 
                 <CalculatedChargesComponent Calculation="@productionCalculation" Status="@status" CardTitle="Live Ruleset Charges" />
                 <CalculatedChargesComponent Calculation="@previewCalculation" Status="@status" CardTitle="Modified Ruleset Charges" />
