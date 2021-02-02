@@ -16,6 +16,8 @@ namespace Pricing.Calculator.Web.App.Models
 
         public string PostalMethod { get; set; } = "-";
 
+        public string RulesetId => $"SC:{SourceCountry}-DC:{DeclarationCountry}";
+
         public List<ChargeConfiguration> ChargeConfigurations { get; set; } = new List<ChargeConfiguration>();
     }
 }

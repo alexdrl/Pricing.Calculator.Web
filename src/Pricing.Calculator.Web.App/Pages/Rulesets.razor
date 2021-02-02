@@ -6,11 +6,14 @@
 <div class="row">
     <div class="col-3">
         <label class="form-label">Select Ruleset:</label>
-        <select class="form-control" @bind="CurrentRulesetId">
-            <option value=""></option>
-            <option value="SC:GB-DC-IE">SC:GB-DC-IE</option>
-            <option value="SC:GB-DT-EU">SC:GB-DT-EU</option>
-        </select>
+         <EditForm Model="@ActiveRulesets">
+            <InputSelect @bind-Value="CurrentRulesetId" class="form-control">
+                @foreach (var value in ActiveRulesets)
+                {
+                    <option value="@value.RulesetId">@value.RulesetId</option>
+                }
+            </InputSelect>
+        </EditForm>
     </div>
 </div>
 
@@ -92,9 +95,18 @@
                 Ishidden = false;
 
             _currentRulesetId = value;
+            ruleset = ActiveRulesets.FirstOrDefault(x => x.RulesetId == value);
         }
     }
 
+    public List<Ruleset> ActiveRulesets { get; set; } = new()
+    {
+        new Ruleset { SourceCountry = "GB", DeclarationCountry = "IE" },
+        new Ruleset { SourceCountry = "ES", DeclarationCountry = "FR" },
+        new Ruleset() { SourceCountry = "GB", DeclarationCountry = "NL" }
+    };
+
+    
     private void AddNewChargeConfig()
     {
         ruleset.ChargeConfigurations.Add(new Models.Request.ChargeConfiguration());
@@ -102,7 +114,6 @@
 
     private void Publish()
     {
-
     }
 
     private void Preview()
@@ -114,4 +125,5 @@
     {
         ruleset.ChargeConfigurations.Remove(chargeConfiguration);
     }
+
 }
