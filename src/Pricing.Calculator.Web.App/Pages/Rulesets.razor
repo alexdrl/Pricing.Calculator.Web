@@ -76,7 +76,7 @@
 
                 <hr />
                 <div class="float-right mb-3">
-                    <button class="btn btn-info" type="button" @onclick="Preview">Preview Changes</button>
+                    <button class="btn btn-info" type="button" @onclick="Preview">@previewButtonText</button>
                     <button class="btn btn-primary" type="button" @onclick="Publish">Publish Changes</button>
                 </div>
             </div>
@@ -85,9 +85,11 @@
     </div>
 </div>
 
+<hr />
+
 <div class="row" hidden="@hidePreview">
     <div class="col">
-        <hr />
+
         <EditForm Model="@order">
 
             <ObjectGraphDataAnnotationsValidator />
@@ -122,6 +124,7 @@
     private string _currentRulesetId = string.Empty;
     private bool Ishidden = true;
     private bool hidePreview = true;
+    private string previewButtonText = "Test Calculation";
 
     public Ruleset ruleset { get; set; } = new Ruleset();
     public Models.Request.Forward.Order order { get; set; } = new Models.Request.Forward.Order();
@@ -174,7 +177,14 @@
 
     private void Preview()
     {
+        hidePreview = !hidePreview;
+        TogglePreviewText();
+    }
 
+    private void TogglePreviewText()
+    {
+        if (hidePreview) previewButtonText = "Test Calculation";
+        else previewButtonText = "Hide Calculation";
     }
 
     private void OnClickDelete(ChargeConfiguration chargeConfiguration)
