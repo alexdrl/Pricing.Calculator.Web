@@ -45,7 +45,7 @@ namespace Pricing.Calculator.Web.App.Models
         public static RulesetDto ToRuleSetRequestDto(Ruleset source, List<string> deminimisbasePrices)
         {
             var target = new RulesetDto(deminimisbasePrices,
-                source.ChargeConfigurations.Select(ChargeConfiguration.MapTo).ToList(), source.SourceCountry,
+                source.ChargeConfigurations.Where(x => x.Enabled).Select(ChargeConfiguration.MapTo).ToList(), source.SourceCountry,
                 source.DeclarationCountry);
 
             return target;
