@@ -100,14 +100,16 @@
                 return;
             }
 
-            Ishidden = true;
+            Ishidden = false;
 
             if (value == "DC:IE-SC:GB") // Goto API to retrieve
             {
-                var ruleSet = RuleSetService.GetRuleSet(value);
+                ruleset = RuleSetService.GetRuleSet(value);
             }
-
-            ruleset = ActiveRulesets.FirstOrDefault(x => x.RulesetId == value);
+            else
+            {
+                ruleset = ActiveRulesets.FirstOrDefault(x => x.RulesetId == value);
+            }
         }
     }
 
@@ -118,7 +120,7 @@
         new Ruleset() { SourceCountry = "GB", DeclarationCountry = "NL" }
     };
 
-    
+
     private void AddNewChargeConfig()
     {
         ruleset.ChargeConfigurations.Add(new Models.Request.ChargeConfiguration());

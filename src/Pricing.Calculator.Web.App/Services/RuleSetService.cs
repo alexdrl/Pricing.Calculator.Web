@@ -1,5 +1,6 @@
 ﻿using Pricing.Calculator.Web.App.ApiClients.CalculatorClient;
 using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models;
+using Pricing.Calculator.Web.App.Models;
 
 namespace Pricing.Calculator.Web.App.Services
 {
@@ -12,10 +13,11 @@ namespace Pricing.Calculator.Web.App.Services
             _calculatorApiClient = calculatorApiClient;
         }
 
-        public RulesetResponseDto GetRuleSet (string id)
+        public Ruleset GetRuleSet (string id)
         {
-            var ruleSet  = _calculatorApiClient.GetRuleset (id);
-            return ruleSet;
+            var response  = _calculatorApiClient.GetRuleset (id);
+            var ruleset = Ruleset.FromApiRuleSetResponseDto (response);
+            return ruleset;
         }
     }
 }

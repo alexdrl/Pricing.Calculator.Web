@@ -1,9 +1,9 @@
-﻿using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models;
+﻿using Pricing.Calculator.Web.App.Models;
 
 namespace Pricing.Calculator.Web.App.Services
 {
     public interface IRuleSetService
     {
-        RulesetResponseDto GetRuleSet (string id);
+        Ruleset GetRuleSet (string id);
     }
 }
