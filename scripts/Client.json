@@ -1,0 +1,590 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "CalculatorApi",
+    "version": "1.0"
+  },
+  "host": "pricing-calculator-api.test.eshopworld.net:80",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api/v1/Actions/calculate/forward": {
+      "post": {
+        "tags": [
+          "Actions"
+        ],
+        "summary": "Process forward calculation.",
+        "operationId": "ForwardCalculation",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A calculation DTO, instance of Pricing.Calculator.Api.Contracts.V1.Requests.ForwardCalculationDto class.",
+            "schema": {
+              "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.ForwardCalculationDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/Actions/calculate/reverse": {
+      "post": {
+        "tags": [
+          "Actions"
+        ],
+        "summary": "Process reverse calculation.",
+        "operationId": "ReverseCalculation",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A calculation DTO, instance of Pricing.Calculator.Api.Contracts.V1.Requests.ReverseCalculationDto class.",
+            "schema": {
+              "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.ReverseCalculationDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/Calculations/{id}": {
+      "get": {
+        "tags": [
+          "Calculations"
+        ],
+        "summary": "Gets the specified identifier.",
+        "operationId": "GetCalculation",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The identifier.",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Rulesets/{id}": {
+      "get": {
+        "tags": [
+          "Rulesets"
+        ],
+        "summary": "Gets the specified identifier.",
+        "operationId": "GetRuleset",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The identifier.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/Rulesets": {
+      "post": {
+        "tags": [
+          "Rulesets"
+        ],
+        "summary": "Creates a ruleset from the specified data, or updates a matching one from that data.",
+        "operationId": "SendRuleset",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.RulesetDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.RulesetResponseDto"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto": {
+      "description": "Price DTO.",
+      "required": [
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "currencyIso": {
+          "description": "An ISO 4217 currency code string.",
+          "type": "string",
+          "readOnly": true
+        },
+        "value": {
+          "format": "double",
+          "description": "Monetary value",
+          "minimum": 0,
+          "type": "number"
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.ItemDto": {
+      "description": "Item DTO.",
+      "required": [
+        "inputDeliveryPrice",
+        "inputPrice"
+      ],
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "format": "int32",
+          "description": "Gets items quantity.",
+          "type": "integer",
+          "readOnly": true
+        },
+        "inputPrice": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "inputDeliveryPrice": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "vatRate": {
+          "format": "double",
+          "description": "Gets Vat rate",
+          "type": "number",
+          "readOnly": true
+        },
+        "dutyRate": {
+          "format": "double",
+          "description": "Gets Duty rate",
+          "type": "number",
+          "readOnly": true
+        },
+        "weight": {
+          "format": "double",
+          "description": "Gets Weight",
+          "type": "number",
+          "readOnly": true
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.ForwardCalculationDto": {
+      "description": "Forward Calculation DTO implementation.",
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "description": "(Required) Order Id, Guid as string.",
+          "type": "string",
+          "readOnly": true
+        },
+        "currencyIso": {
+          "description": "(Required) The currency ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "sourceCountryIso": {
+          "description": "(Optional) The source country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "declarationCountryIso": {
+          "description": "(Required) The declaration country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "brandCode": {
+          "description": "(Optional) The three letter brand code.",
+          "type": "string",
+          "readOnly": true
+        },
+        "items": {
+          "description": "Gets the items DTO.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.ItemDto"
+          }
+        }
+      }
+    },
+    "Pricing.Calculator.Domain.Services.Calculators.Reverse.IncotermRules": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "type": "integer"
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.IncotermsDto": {
+      "description": "Represents an Incoterms DTO.",
+      "required": [
+        "rule"
+      ],
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "#/definitions/Pricing.Calculator.Domain.Services.Calculators.Reverse.IncotermRules"
+        },
+        "chargeNames": {
+          "description": "(Optional) Gets a collection of Charge Names to be used when a custom set of incoterms rules are being used.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.ReverseCalculationDto": {
+      "description": "Reverse Calculation DTO implementation.",
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "properties": {
+        "orderId": {
+          "description": "(Required) Order Id, Guid as string.",
+          "type": "string",
+          "readOnly": true
+        },
+        "currencyIso": {
+          "description": "(Required) The currency ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "sourceCountryIso": {
+          "description": "(Optional) The source country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "declarationCountryIso": {
+          "description": "(Required) The declaration country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "brandCode": {
+          "description": "(Optional) The three letter brand code.",
+          "type": "string",
+          "readOnly": true
+        },
+        "items": {
+          "description": "Gets the items DTO.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.ItemDto"
+          }
+        },
+        "incoterms": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.IncotermsDto"
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.DeminimisDto": {
+      "description": "Monetary value DTO",
+      "required": [
+        "applyWhenGreaterThanThresholdOnly",
+        "threshold"
+      ],
+      "type": "object",
+      "properties": {
+        "threshold": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "applyWhenGreaterThanThresholdOnly": {
+          "description": "Specifies that the deminimis is applied only when the amount is greater, not when it is equal to the threshold.",
+          "type": "boolean"
+        }
+      }
+    },
+    "Pricing.Calculator.Domain.Rulesets.ChargeType": {
+      "format": "int32",
+      "enum": [
+        0,
+        1,
+        2
+      ],
+      "type": "integer"
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.ChargeConfigurationDto": {
+      "description": "Representation of a ruleset.",
+      "required": [
+        "chargeType"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the charge.",
+          "type": "string",
+          "readOnly": true
+        },
+        "deminimis": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.DeminimisDto"
+        },
+        "rate": {
+          "format": "double",
+          "description": "Rate that the charge is applied on.",
+          "type": "number",
+          "readOnly": true
+        },
+        "chargeType": {
+          "$ref": "#/definitions/Pricing.Calculator.Domain.Rulesets.ChargeType"
+        },
+        "baseChargeNames": {
+          "description": "The base charges on which this charge is applied.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        },
+        "fixedChargeAmount": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "activeFrom": {
+          "format": "date-time",
+          "description": "The date in which the charge is active.",
+          "type": "string",
+          "readOnly": true
+        },
+        "minimumPayable": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "maximumPayable": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "minimumCollectible": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        },
+        "excess": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.PriceDto"
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Requests.RulesetDto": {
+      "description": "Representation of a ruleset.",
+      "required": [
+        "chargeConfigurations",
+        "deminimisBasePrices"
+      ],
+      "type": "object",
+      "properties": {
+        "sourceCountryIso": {
+          "description": "(Optional) The source country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "declarationCountryIso": {
+          "description": "(Required) The declaration country ISO.",
+          "type": "string",
+          "readOnly": true
+        },
+        "deminimisBasePrices": {
+          "description": "(Required) The base charges for this definition.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "chargeConfigurations": {
+          "description": "(Required) The charge configurations for charges based on a rate applied to the base charge amount.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Requests.ChargeConfigurationDto"
+          }
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto": {
+      "description": "Monetary value DTO",
+      "type": "object",
+      "properties": {
+        "currencyIso": {
+          "description": "An ISO 4217 currency code string.",
+          "type": "string",
+          "readOnly": true
+        },
+        "value": {
+          "format": "double",
+          "description": "Monetary value",
+          "type": "number",
+          "readOnly": true
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Responses.DeminimisResponseDto": {
+      "description": "Deminimis Response DTO.",
+      "type": "object",
+      "properties": {
+        "threshold": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto"
+        },
+        "applyWhenGreaterThanThresholdOnly": {
+          "description": "Gets a value indicating whether [apply when greater than threshold only].",
+          "type": "boolean",
+          "readOnly": true
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Responses.ChargeConfigurationResponseDto": {
+      "description": "Charge configuration response DTO",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Gets the name.",
+          "type": "string",
+          "readOnly": true
+        },
+        "chargeType": {
+          "$ref": "#/definitions/Pricing.Calculator.Domain.Rulesets.ChargeType"
+        },
+        "activeFrom": {
+          "format": "date-time",
+          "description": "Gets the active from.",
+          "type": "string",
+          "readOnly": true
+        },
+        "deminimis": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.DeminimisResponseDto"
+        },
+        "baseChargeNames": {
+          "description": "Gets the base charge names.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        },
+        "rate": {
+          "format": "double",
+          "description": "Gets the rate.",
+          "type": "number",
+          "readOnly": true
+        },
+        "minimumPayable": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto"
+        },
+        "minimumCollectible": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto"
+        },
+        "excess": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto"
+        },
+        "maximumPayable": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto"
+        },
+        "fixedChargeAmount": {
+          "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.PriceResponseDto"
+        }
+      }
+    },
+    "Pricing.Calculator.Api.Contracts.V1.Responses.RulesetResponseDto": {
+      "description": "Ruleset response DTO.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Gets the identifier.",
+          "type": "string",
+          "readOnly": true
+        },
+        "version": {
+          "format": "uuid",
+          "description": "Gets the version.",
+          "type": "string",
+          "readOnly": true
+        },
+        "deminimisBasePrices": {
+          "description": "Gets the deminimis base charges.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true
+        },
+        "chargeConfigurations": {
+          "description": "Gets the charge configurations.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Pricing.Calculator.Api.Contracts.V1.Responses.ChargeConfigurationResponseDto"
+          },
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Please insert JWT with Bearer into field"
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

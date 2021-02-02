@@ -1,6 +1,8 @@
 ﻿using Pricing.Calculator.Web.App.Models.Request;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Pricing.Calculator.Web.App.ApiClients.CalculatorClient.Models;
 
 namespace Pricing.Calculator.Web.App.Models
 {
@@ -16,8 +18,23 @@ namespace Pricing.Calculator.Web.App.Models
 
         public string PostalMethod { get; set; } = "-";
 
-        public string RulesetId => $"SC:{SourceCountry}-DC:{DeclarationCountry}";
+        public string RulesetId => $"{SourceCountry}{DeclarationCountry}" == "GBIE" ? "DC:IE-SC:GB" :  $"SC:{SourceCountry}-DC:{DeclarationCountry}";
 
         public List<ChargeConfiguration> ChargeConfigurations { get; set; } = new List<ChargeConfiguration>();
+
+        /// <summary>
+        /// FromApiRuleSetResponseDto
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static Ruleset FromApiRuleSetResponseDto (RulesetResponseDto source)
+        {
+            var target = new Ruleset();
+
+            target.SourceCountry = source.Id.Split ('-').First (x => x.StartsWith ("SC")).Split (':')[1];
+            target.DeclarationCountry = source.Id.Split('-').First(x => x.StartsWith("DC")).Split(':')[1];
+            target.ChargeConfigurations =  source.ChargeConfigurations.Select(ChargeConfiguration.MapFrom).ToList();
+            return target;
+        }
     }
 }

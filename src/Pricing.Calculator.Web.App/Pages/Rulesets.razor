@@ -1,4 +1,7 @@
 ﻿@page "/rulesets"
+@using Microsoft.Net.Http.Headers
+@using Pricing.Calculator.Web.App.Services
+@inject IRuleSetService RuleSetService
 
 @using Pricing.Calculator.Web.App.Models.Request
 @using Pricing.Calculator.Web.App.Models
@@ -111,13 +114,24 @@
         get { return _currentRulesetId; }
         set
         {
-            if (string.IsNullOrWhiteSpace(value))
-                Ishidden = true;
-            else
-                Ishidden = false;
-
             _currentRulesetId = value;
-            ruleset = ActiveRulesets.FirstOrDefault(x => x.RulesetId == value);
+
+            if (string.IsNullOrWhiteSpace (value))
+            {
+                Ishidden = true;
+                return;
+            }
+
+            Ishidden = false;
+
+            if (value == "DC:IE-SC:GB") // Goto API to retrieve
+            {
+                ruleset = RuleSetService.GetRuleSet(value);
+            }
+            else
+            {
+                ruleset = ActiveRulesets.FirstOrDefault(x => x.RulesetId == value);
+            }
         }
     }
 

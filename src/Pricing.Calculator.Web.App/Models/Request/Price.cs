@@ -2,7 +2,7 @@
 
 namespace Pricing.Calculator.Web.App.Models.Request
 {
-    public record Price
+    public class Price
     {
         public string CurrencyIso => "EUR";
 
