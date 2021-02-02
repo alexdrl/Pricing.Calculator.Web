@@ -1,4 +1,7 @@
 ﻿@page "/rulesets"
+@using Pricing.Calculator.Web.App.Services
+@inject IRuleSetService RuleSetService
+
 
 <div class="row">
     <div class="col-3">
@@ -7,6 +10,8 @@
             <option value=""></option>
             <option value="SC:GB-DC-IE">SC:GB-DC-IE</option>
             <option value="SC:GB-DT-EU">SC:GB-DT-EU</option>
+            <option value="DC:IE-SC:GB">DC:IE-SC:GB</option>
+            
         </select>
     </div>
 </div>
@@ -48,19 +53,120 @@
     </div>
 
     <h4 class="mb-3 border-bottom">Charge Configurations</h4>
-    <button class="btn btn-danger pt-0 pb-0 ml-2" type="button"><span class="oi oi-plus" @onclick="AddNewChargeConfig"></span></button>
 
-    @foreach (var chargeConf in ChargeConfigurations)
-    {
-        <EditForm Model="@chargeConf">
-            <ChargeConfigurationComponent ChargeConfiguration="@chargeConf" />
-        </EditForm>
-    }
+    <div class="card mb-3">
+        <div class="card-header text-white bg-secondary">
+            Duty
+            <div class="float-right">
+                <button class="btn btn-success pt-0 pb-0 ml-2" type="button">Enable</button>
+                <button class="btn btn-warning pt-0 pb-0 ml-2" type="button">Disable</button>
+                <button class="btn btn-danger pt-0 pb-0 ml-2" type="button"><span class="oi oi-trash"></span></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Charge Type</label>
+                        <input type="text" class="form-control" value="Value Based">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <input type="text" class="form-control" value="10%">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Deminimis Threshold</label>
+                        <input type="text" class="form-control" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Deminimis Base Charges</label>
+                        <select class="custom-select" multiple>
+                            <option value="item" selected>Item</option>
+                            <option value="delivery">Delivery</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Base Charges</label>
+                        <select class="custom-select" multiple>
+                            <option value="item" selected>Item</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="duty">Duty</option>
+                            <option value="vat">Vat</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="card mb-3">
+        <div class="card-header text-white bg-secondary">
+            Vat
+            <div class="float-right">
+                <button class="btn btn-success pt-0 pb-0 ml-2" type="button">Enable</button>
+                <button class="btn btn-warning pt-0 pb-0 ml-2" type="button">Disable</button>
+                <button class="btn btn-danger pt-0 pb-0 ml-2" type="button"><span class="oi oi-trash"></span></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Charge Type</label>
+                        <input type="text" class="form-control" value="Value Based">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <input type="text" class="form-control" value="15%">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Deminimis Threshold</label>
+                        <input type="text" class="form-control" value="1000">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Deminimis Base Charges</label>
+                        <select class="custom-select" multiple>
+                            <option value="item" selected>Item</option>
+                            <option value="delivery">Delivery</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>Base Charges</label>
+                        <select class="custom-select" multiple>
+                            <option value="item" selected>Item</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="duty" selected>Duty</option>
+                            <option value="vat">Vat</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <hr />
     <div class="float-right mb-3">
         <button class="btn btn-info" type="button">Preview Changes</button>
-        <button class="btn btn-primary" type="button" @onclick="Publish">Publish Changes</button>
+        <button class="btn btn-primary" type="button">Publish Changes</button>
     </div>
 </div>
 
@@ -69,34 +175,23 @@
     private string _currentRulesetId = string.Empty;
     private bool Ishidden = true;
 
-    public List<Models.Request.ChargeConfiguration> ChargeConfigurations { get; set; } = new List<Models.Request.ChargeConfiguration>()
+    public string CurrentRulesetId
     {
-        new Models.Request.ChargeConfiguration
-        {
-            Name = "test"
-        }
-    };
 
-    public string CurrentRulesetId {
         get { return _currentRulesetId; }
         set
         {
-            if (string.IsNullOrWhiteSpace(value))
-                Ishidden = true;
-            else
-                Ishidden = false;
-
             _currentRulesetId = value;
+
+            if (string.IsNullOrWhiteSpace (value))
+            {
+                Ishidden = true;
+                return;
+            }
+
+            Ishidden = true;
+
+            var ruleSet = RuleSetService.GetRuleSet (value);
         }
-    }
-
-    private void AddNewChargeConfig()
-    {
-        ChargeConfigurations.Add(new Models.Request.ChargeConfiguration());
-    }
-
-    private void Publish()
-    {
-      
     }
 }

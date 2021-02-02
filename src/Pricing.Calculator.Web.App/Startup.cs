@@ -6,6 +6,11 @@ using Microsoft.Extensions.Hosting;
 using Pricing.Calculator.Web.App.Forward;
 using Pricing.Calculator.Web.App.Services;
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Cryptography.Xml;
+using Microsoft.Extensions.Http;
+using Microsoft.Rest;
 using Pricing.Calculator.Web.App.ApiClients.CalculatorClient;
 
 namespace Pricing.Calculator.Web.App
@@ -31,17 +36,33 @@ namespace Pricing.Calculator.Web.App
                 client.BaseAddress = new Uri(Configuration["CalculatorApi:BaseAddress"]);
             });
 
-            services.AddHttpClient<IReverseCalculationService, ReverseCalculationService>(client =>
+            services.AddHttpClient<IReverseCalculationService, ReverseCalculationService> (client =>
             {
-                client.BaseAddress = new Uri(Configuration["CalculatorApi:BaseAddress"]);
+                client.BaseAddress = new Uri (Configuration["CalculatorApi:BaseAddress"]);
             });
-
+                
             services.AddHttpClient<ICalculatorApiClient, CalculatorApiClient>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["CalculatorApi:BaseAddress"]);
             });
 
-            services.AddScoped<IRuleSetService, RuleSetService> ();
+            services.AddScoped<IRuleSetService, RuleSetService>();
+
+            services.AddScoped<ICalculatorApiClient, CalculatorApiClient> (p =>
+            {
+                var httpClient = p.GetRequiredService<IHttpClientFactory>()
+                    .CreateClient(nameof(ICalculatorApiClient));
+
+                ServiceClientCredentials xx = null;
+
+                Uri xxx = new Uri(Configuration["CalculatorApi:BaseAddress"]);
+
+                return new CalculatorApiClient(xxx,xx);
+            });
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
