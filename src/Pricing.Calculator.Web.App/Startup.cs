@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Pricing.Calculator.Web.App.Forward;
+using Pricing.Calculator.Web.App.Preview;
 using Pricing.Calculator.Web.App.Services;
 using System;
 
@@ -31,6 +32,11 @@ namespace Pricing.Calculator.Web.App
             });
 
             services.AddHttpClient<IReverseCalculationService, ReverseCalculationService>(client =>
+            {
+                client.BaseAddress = new Uri(Configuration["CalculatorApi:BaseAddress"]);
+            });
+
+            services.AddHttpClient<IPreviewCalculationService, PreviewCalculationService>(client =>
             {
                 client.BaseAddress = new Uri(Configuration["CalculatorApi:BaseAddress"]);
             });
