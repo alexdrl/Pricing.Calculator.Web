@@ -47,7 +47,7 @@ namespace Pricing.Calculator.Web.App.Models.Request
                 source.Name,
                 rate: Convert.ToDouble(source.Rate),
                 baseChargeNames: source.BaseCharges.Where(x => x.selected).Select(x => x.name).ToList(),
-                deminimis: new DeminimisDto(new PriceDto(Convert.ToDouble(source.DeminimisThreshold)), true) 
+                deminimis: new DeminimisDto(new PriceDto(Convert.ToDouble(source.DeminimisThreshold), "EUR"), true) 
             );
 
             return tt;
